@@ -199,6 +199,26 @@ class MeshInterface:
             time.sleep(sleep)
         return False
 
+    def factoryReset(self, keepName=False, keepChannel=False):
+        c = mesh_pb2.ChannelSettings()
+        c.CopyFrom(self.radioConfig.channel_settings)
+
+        longName = self.getLongName()
+        shortName = self.getShortName()
+
+        t = mesh_pb2.ToRadio()
+        t.set_radio.CopyFrom(self.radioConfig)
+        t.set_radio.preferences.factory_reset = True
+        self._sendToRadio(t)
+
+        if keepName:
+            self.setOwner(longName, shortName)
+
+        if keepChannel:
+            t = mesh_pb2.ToRadio()
+            t.set_radio.channel_settings.CopyFrom(c)
+            self._sendToRadio(t)
+
     def writeConfig(self):
         """Write the current (edited) radioConfig to the device"""
         if self.radioConfig == None:
@@ -208,6 +228,55 @@ class MeshInterface:
         t.set_radio.CopyFrom(self.radioConfig)
         self._sendToRadio(t)
 
+    def getMyNode(self):
+        if self.myInfo is None:
+            return None
+        myId = self.myInfo.my_node_num
+        for _, nodeDict in self.nodes.items():
+            if 'num' in nodeDict and nodeDict['num'] == myId:
+                if 'user' in nodeDict:
+                    return nodeDict['user']
+        return None
+
+    def getLongName(self):
+        user = self.getMyNode()
+        if user is not None:
+            return user.get('longName', None)
+        return None
+
+    def getShortName(self):
+        user = self.getMyNode()
+        if user is not None:
+            return user.get('shortName', None)
+        return None
+
+    def setOwner(self, long_name, short_name=None):
+        """Set device owner name"""
+        nChars = 3
+        minChars = 2
+        if long_name is not None:
+            long_name = long_name.strip()
+            if short_name is None:
+                words = long_name.split()
+                if len(long_name) <= nChars:
+                    short_name = long_name
+                elif len(words) >= minChars:
+                    short_name = ''.join(map(lambda word: word[0], words))
+                else:
+                    trans = str.maketrans(dict.fromkeys('aeiouAEIOU'))
+                    short_name = long_name[0] + long_name[1:].translate(trans)
+                    if len(short_name) < nChars:
+                        short_name = long_name[:nChars]
+        t = mesh_pb2.ToRadio()
+        if long_name is not None:
+            t.set_owner.long_name = long_name
+        if short_name is not None:
+            short_name = short_name.strip()
+            if len(short_name) > nChars:
+                short_name = short_name[:nChars]
+            t.set_owner.short_name = short_name
+        self._sendToRadio(t)
+
     @property
     def channelURL(self):
         """The sharable URL that describes the current channel
@@ -215,6 +284,19 @@ class MeshInterface:
         bytes = self.radioConfig.channel_settings.SerializeToString()
         s = base64.urlsafe_b64encode(bytes).decode('ascii')
         return f"https://www.meshtastic.org/c/#{s}"
+
+    def setURL(self, url, write=True):
+        """Set mesh network URL"""
+        if self.radioConfig == None:
+            raise Exception("No RadioConfig has been read")
+
+        # URLs are of the form https://www.meshtastic.org/c/#{base64_channel_settings}
+        # Split on '/#' to find the base64 encoded channel settings
+        splitURL = url.split("/#")
+        decodedURL = base64.urlsafe_b64decode(splitURL[-1])
+        self.radioConfig.channel_settings.ParseFromString(decodedURL)
+        if write:
+            self.writeConfig()
 
     def _generatePacketId(self):
         """Get a new unique packet ID"""
@@ -279,6 +361,7 @@ class MeshInterface:
             self._nodesByNum[node["num"]] = node
             if "user" in node:  # Some nodes might not have user/ids assigned yet
                 self.nodes[node["user"]["id"]] = node
+            pub.sendMessage("meshtastic.node.updated", node=node, interface=self)
         elif fromRadio.config_complete_id == MY_CONFIG_ID:
             # we ignore the config_complete_id, it is unneeded for our stream API fromRadio.config_complete_id
             self._connected()

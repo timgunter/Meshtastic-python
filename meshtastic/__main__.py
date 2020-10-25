@@ -128,10 +128,20 @@ def onConnected(interface):
     print("Connected to radio")
     closeNow = False  # Should we drop the connection after we finish?
     try:
+        if args.reset:
+            interface.factoryReset()
+
+        if args.resetstate:
+            interface.factoryReset(True, True)
+
         if args.settime:
             print("Setting device RTC time")
             # can include lat/long/alt etc: latitude = 37.5, longitude = -122.1
             interface.sendPosition()
+
+        if args.setowner:
+            print(f"Setting device owner to {args.setowner}")
+            interface.setOwner(args.setowner)
 
         if args.sendtext:
             print(f"Sending text message {args.sendtext} to {args.dest}")
@@ -176,11 +186,7 @@ def onConnected(interface):
 
             # Handle set URL
             if args.seturl:
-                # URLs are of the form https://www.meshtastic.org/c/#{base64_channel_settings}
-                # Split on '/#' to find the base64 encoded channel settings
-                splitURL = args.seturl.split("/#")
-                bytes = base64.urlsafe_b64decode(splitURL[-1])
-                interface.radioConfig.channel_settings.ParseFromString(bytes)
+                interface.setURL(args.seturl, False)
 
             print("Writing modified preferences to device")
             interface.writeConfig()
@@ -257,6 +263,9 @@ def main():
         "--seturl", help="Set a channel URL", action="store")
 
     parser.add_argument(
+        "--setowner", help="Set device owner name", action="store")
+
+    parser.add_argument(
         "--dest", help="The destination node id for the --send commands, if not set '^all' is assumed", default="^all")
 
     parser.add_argument(
@@ -265,6 +274,12 @@ def main():
     parser.add_argument(
         "--reply", help="Reply to received messages",
         action="store_true")
+
+    parser.add_argument(
+        "--reset", help="Factory reset device", action="store_true")
+
+    parser.add_argument(
+        "--resetstate", help="Reset device but keep name and channel settings", action="store_true")
 
     parser.add_argument(
         "--settime", help="Set the real time clock on the device", action="store_true")
