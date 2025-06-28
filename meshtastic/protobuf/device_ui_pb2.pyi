@@ -321,7 +321,7 @@ class DeviceUIConfig(google.protobuf.message.Message):
         """
 
     class GpsCoordinateFormat(_GpsCoordinateFormat, metaclass=_GpsCoordinateFormatEnumTypeWrapper):
-        """  
+        """
         How the GPS coordinates are displayed on the OLED screen.
         """
 
