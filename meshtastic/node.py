@@ -246,6 +246,10 @@ class Node:
             p.set_module_config.paxcounter.CopyFrom(self.moduleConfig.paxcounter)
         elif config_name == "traffic_management":
             p.set_module_config.traffic_management.CopyFrom(self.moduleConfig.traffic_management)
+        elif config_name == "direct_message_reply":
+            p.set_module_config.direct_message_reply.CopyFrom(self.moduleConfig.direct_message_reply)
+        elif config_name == "position_update_reply":
+            p.set_module_config.position_update_reply.CopyFrom(self.moduleConfig.position_update_reply)
         else:
             our_exit(f"Error: No valid config with name {config_name}")
 
