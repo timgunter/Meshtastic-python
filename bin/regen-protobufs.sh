@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 set -e
 
@@ -6,8 +6,10 @@ set -e
 #gsed -i 's/import "\//import ".\//g' ./protobufs/meshtastic/*
 #gsed -i 's/package meshtastic;//g' ./protobufs/meshtastic/*
 
+poetry env activate >&2
+
 # protoc looks for mypy plugin in the python path
-source $(poetry env activate)
+$(poetry env activate)
 
 # Put our temp files in the poetry build directory
 TMPDIR=./build/meshtastic/protofixup
