@@ -7,7 +7,7 @@ set -e
 #gsed -i 's/package meshtastic;//g' ./protobufs/meshtastic/*
 
 # protoc looks for mypy plugin in the python path
-source $(poetry env info --path)/bin/activate
+source $(poetry env activate)
 
 # Put our temp files in the poetry build directory
 TMPDIR=./build/meshtastic/protofixup
