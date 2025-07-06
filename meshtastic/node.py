@@ -221,6 +221,10 @@ class Node:
             p.set_module_config.ambient_lighting.CopyFrom(self.moduleConfig.ambient_lighting)
         elif config_name == "paxcounter":
             p.set_module_config.paxcounter.CopyFrom(self.moduleConfig.paxcounter)
+        elif config_name == "direct_message_reply":
+            p.set_module_config.direct_message_reply.CopyFrom(self.moduleConfig.direct_message_reply)
+        elif config_name == "position_update_reply":
+            p.set_module_config.position_update_reply.CopyFrom(self.moduleConfig.position_update_reply)
         else:
             our_exit(f"Error: No valid config with name {config_name}")
 

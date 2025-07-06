@@ -186,6 +186,14 @@ class AdminMessage(google.protobuf.message.Message):
         """
         TODO: REPLACE
         """
+        DIRECTMESSAGEREPLY_CONFIG: AdminMessage._ModuleConfigType.ValueType  # 13
+        """
+        TODO: REPLACE
+        """
+        POSITIONUPDATEREPLY_CONFIG: AdminMessage._ModuleConfigType.ValueType  # 14
+        """
+        TODO: REPLACE
+        """
 
     class ModuleConfigType(_ModuleConfigType, metaclass=_ModuleConfigTypeEnumTypeWrapper):
         """
@@ -241,6 +249,14 @@ class AdminMessage(google.protobuf.message.Message):
     TODO: REPLACE
     """
     PAXCOUNTER_CONFIG: AdminMessage.ModuleConfigType.ValueType  # 12
+    """
+    TODO: REPLACE
+    """
+    DIRECTMESSAGEREPLY_CONFIG: AdminMessage.ModuleConfigType.ValueType  # 13
+    """
+    TODO: REPLACE
+    """
+    POSITIONUPDATEREPLY_CONFIG: AdminMessage.ModuleConfigType.ValueType  # 14
     """
     TODO: REPLACE
     """

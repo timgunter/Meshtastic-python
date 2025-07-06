@@ -493,6 +493,153 @@ class ModuleConfig(google.protobuf.message.Message):
         def ClearField(self, field_name: typing.Literal["ble_threshold", b"ble_threshold", "enabled", b"enabled", "paxcounter_update_interval", b"paxcounter_update_interval", "wifi_threshold", b"wifi_threshold"]) -> None: ...
 
     @typing.final
+    class DirectMessageReplyConfig(google.protobuf.message.Message):
+        """
+        Config for the DirectMessageReplyModule
+        """
+
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        ENABLED_FIELD_NUMBER: builtins.int
+        CHANNEL_FIELD_NUMBER: builtins.int
+        SEND_HOPS_FIELD_NUMBER: builtins.int
+        SEND_SIGNAL_METRICS_FIELD_NUMBER: builtins.int
+        ECHO_MESSAGE_FIELD_NUMBER: builtins.int
+        ECHO_USER_FIELD_NUMBER: builtins.int
+        QUERIES_FIELD_NUMBER: builtins.int
+        RESPONSES_FIELD_NUMBER: builtins.int
+        enabled: builtins.bool
+        """
+        Whether the DirectMessageReplyModule is enabled
+        """
+        channel: builtins.int
+        """
+        The channel to use for the direct message reply
+        If net set to a secondary channel, the reply will
+        be sent as a direct message.
+        """
+        send_hops: builtins.bool
+        """
+        If true, add hop info to the reply message.
+        """
+        send_signal_metrics: builtins.bool
+        """
+        If true, signal metrics will be sent with the reply message.
+        """
+        echo_message: builtins.bool
+        """
+        If true, echo the message back in the reply.
+        """
+        echo_user: builtins.bool
+        """
+        If true, echo the short user name back in the reply.
+        """
+        queries: builtins.str
+        """
+        "|" delimited list of potential received queries
+        """
+        responses: builtins.str
+        """
+        "|" delimited list of responses to queries
+        The first response listed will be the one given if a received message
+        doesn't match one of the queries. Make an empty query with a '|'
+        character if you don't want a particular query to correspond to this
+        first value.
+        """
+        def __init__(
+            self,
+            *,
+            enabled: builtins.bool = ...,
+            channel: builtins.int = ...,
+            send_hops: builtins.bool = ...,
+            send_signal_metrics: builtins.bool = ...,
+            echo_message: builtins.bool = ...,
+            echo_user: builtins.bool = ...,
+            queries: builtins.str = ...,
+            responses: builtins.str = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing.Literal["channel", b"channel", "echo_message", b"echo_message", "echo_user", b"echo_user", "enabled", b"enabled", "queries", b"queries", "responses", b"responses", "send_hops", b"send_hops", "send_signal_metrics", b"send_signal_metrics"]) -> None: ...
+
+    @typing.final
+    class PositionUpdateReplyConfig(google.protobuf.message.Message):
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+        ENABLED_FIELD_NUMBER: builtins.int
+        SEND_LOCATION_FIELD_NUMBER: builtins.int
+        SEND_DISTANCE_FIELD_NUMBER: builtins.int
+        SEND_BEARING_FIELD_NUMBER: builtins.int
+        SEND_HOPS_FIELD_NUMBER: builtins.int
+        SEND_SIGNAL_METRICS_FIELD_NUMBER: builtins.int
+        DECLINATION_FIELD_NUMBER: builtins.int
+        START_CODE_WORD_FIELD_NUMBER: builtins.int
+        NEXT_CODE_WORD_FIELD_NUMBER: builtins.int
+        NEXT_NODE_FIELD_NUMBER: builtins.int
+        NEXT_NODE_DISTANCE_FIELD_NUMBER: builtins.int
+        enabled: builtins.bool
+        """
+        Whether the PositionUpdateReplyModule is enabled
+        """
+        send_location: builtins.bool
+        """
+        If true, echo the short user name back in the reply.
+        """
+        send_distance: builtins.bool
+        """
+        If true, send the distance from the position update to the receiver.
+        """
+        send_bearing: builtins.bool
+        """
+        If true, send the bearing from the position update to the receiver.
+        This is a true compass bearing in degrees from 0 to 360.
+        """
+        send_hops: builtins.bool
+        """
+        If true, send the hops from the position update to the receiver.
+        This is the number of hops the position update has taken to reach the receiver.
+        """
+        send_signal_metrics: builtins.bool
+        """
+        If true, send the signal metrics from the position update to the receiver.
+        This includes SNR, RSSI, and other signal quality metrics.
+        """
+        declination: builtins.float
+        """
+        If non-zero, use to convert magnetic bearing to true bearing(in degrees)
+        """
+        start_code_word: builtins.str
+        """
+        Code word to use to start position update tracking(default/if empty is "start")
+        """
+        next_code_word: builtins.str
+        """
+        Optionl next codeword in sequence of nodes
+        """
+        next_node: builtins.str
+        """
+        Name of next node in sequence
+        """
+        next_node_distance: builtins.float
+        """
+        Distance from node in meters to reveal next node info
+        """
+        def __init__(
+            self,
+            *,
+            enabled: builtins.bool = ...,
+            send_location: builtins.bool = ...,
+            send_distance: builtins.bool = ...,
+            send_bearing: builtins.bool = ...,
+            send_hops: builtins.bool = ...,
+            send_signal_metrics: builtins.bool = ...,
+            declination: builtins.float = ...,
+            start_code_word: builtins.str = ...,
+            next_code_word: builtins.str = ...,
+            next_node: builtins.str = ...,
+            next_node_distance: builtins.float = ...,
+        ) -> None: ...
+        def ClearField(self, field_name: typing.Literal["declination", b"declination", "enabled", b"enabled", "next_code_word", b"next_code_word", "next_node", b"next_node", "next_node_distance", b"next_node_distance", "send_bearing", b"send_bearing", "send_distance", b"send_distance", "send_hops", b"send_hops", "send_location", b"send_location", "send_signal_metrics", b"send_signal_metrics", "start_code_word", b"start_code_word"]) -> None: ...
+
+    @typing.final
     class SerialConfig(google.protobuf.message.Message):
         """
         Serial Config
@@ -1155,6 +1302,8 @@ class ModuleConfig(google.protobuf.message.Message):
     AMBIENT_LIGHTING_FIELD_NUMBER: builtins.int
     DETECTION_SENSOR_FIELD_NUMBER: builtins.int
     PAXCOUNTER_FIELD_NUMBER: builtins.int
+    DIRECT_MESSAGE_REPLY_FIELD_NUMBER: builtins.int
+    POSITION_UPDATE_REPLY_FIELD_NUMBER: builtins.int
     @property
     def mqtt(self) -> global___ModuleConfig.MQTTConfig:
         """
@@ -1233,6 +1382,18 @@ class ModuleConfig(google.protobuf.message.Message):
         TODO: REPLACE
         """
 
+    @property
+    def direct_message_reply(self) -> global___ModuleConfig.DirectMessageReplyConfig:
+        """
+        TODO: REPLACE
+        """
+
+    @property
+    def position_update_reply(self) -> global___ModuleConfig.PositionUpdateReplyConfig:
+        """
+        TODO: REPLACE
+        """
+
     def __init__(
         self,
         *,
@@ -1249,10 +1410,12 @@ class ModuleConfig(google.protobuf.message.Message):
         ambient_lighting: global___ModuleConfig.AmbientLightingConfig | None = ...,
         detection_sensor: global___ModuleConfig.DetectionSensorConfig | None = ...,
         paxcounter: global___ModuleConfig.PaxcounterConfig | None = ...,
+        direct_message_reply: global___ModuleConfig.DirectMessageReplyConfig | None = ...,
+        position_update_reply: global___ModuleConfig.PositionUpdateReplyConfig | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing.Literal["ambient_lighting", b"ambient_lighting", "audio", b"audio", "canned_message", b"canned_message", "detection_sensor", b"detection_sensor", "external_notification", b"external_notification", "mqtt", b"mqtt", "neighbor_info", b"neighbor_info", "paxcounter", b"paxcounter", "payload_variant", b"payload_variant", "range_test", b"range_test", "remote_hardware", b"remote_hardware", "serial", b"serial", "store_forward", b"store_forward", "telemetry", b"telemetry"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing.Literal["ambient_lighting", b"ambient_lighting", "audio", b"audio", "canned_message", b"canned_message", "detection_sensor", b"detection_sensor", "external_notification", b"external_notification", "mqtt", b"mqtt", "neighbor_info", b"neighbor_info", "paxcounter", b"paxcounter", "payload_variant", b"payload_variant", "range_test", b"range_test", "remote_hardware", b"remote_hardware", "serial", b"serial", "store_forward", b"store_forward", "telemetry", b"telemetry"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing.Literal["payload_variant", b"payload_variant"]) -> typing.Literal["mqtt", "serial", "external_notification", "store_forward", "range_test", "telemetry", "canned_message", "audio", "remote_hardware", "neighbor_info", "ambient_lighting", "detection_sensor", "paxcounter"] | None: ...
+    def HasField(self, field_name: typing.Literal["ambient_lighting", b"ambient_lighting", "audio", b"audio", "canned_message", b"canned_message", "detection_sensor", b"detection_sensor", "direct_message_reply", b"direct_message_reply", "external_notification", b"external_notification", "mqtt", b"mqtt", "neighbor_info", b"neighbor_info", "paxcounter", b"paxcounter", "payload_variant", b"payload_variant", "position_update_reply", b"position_update_reply", "range_test", b"range_test", "remote_hardware", b"remote_hardware", "serial", b"serial", "store_forward", b"store_forward", "telemetry", b"telemetry"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["ambient_lighting", b"ambient_lighting", "audio", b"audio", "canned_message", b"canned_message", "detection_sensor", b"detection_sensor", "direct_message_reply", b"direct_message_reply", "external_notification", b"external_notification", "mqtt", b"mqtt", "neighbor_info", b"neighbor_info", "paxcounter", b"paxcounter", "payload_variant", b"payload_variant", "position_update_reply", b"position_update_reply", "range_test", b"range_test", "remote_hardware", b"remote_hardware", "serial", b"serial", "store_forward", b"store_forward", "telemetry", b"telemetry"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing.Literal["payload_variant", b"payload_variant"]) -> typing.Literal["mqtt", "serial", "external_notification", "store_forward", "range_test", "telemetry", "canned_message", "audio", "remote_hardware", "neighbor_info", "ambient_lighting", "detection_sensor", "paxcounter", "direct_message_reply", "position_update_reply"] | None: ...
 
 global___ModuleConfig = ModuleConfig
 

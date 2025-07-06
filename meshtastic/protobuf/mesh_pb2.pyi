@@ -469,6 +469,18 @@ class _HardwareModelEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._
     """*
     GAT562 Mesh Trial Tracker
     """
+    WISMESH_TAG: _HardwareModel.ValueType  # 105
+    """*
+    RAKwireless WisMesh Tag
+    """
+    RAK3312: _HardwareModel.ValueType  # 106
+    """*
+    RAKwireless WisBlock Core RAK3312 https://docs.rakwireless.com/product-categories/wisduo/rak3112-module/overview/
+    """
+    THINKNODE_M5: _HardwareModel.ValueType  # 107
+    """*
+    Elecrow ThinkNode M5 https://www.elecrow.com/wiki/ThinkNode_M5_Meshtastic_LoRa_Signal_Transceiver_ESP32-S3.html
+    """
     PRIVATE_HW: _HardwareModel.ValueType  # 255
     """
     ------------------------------------------------------------------------------------------------------------------------------------------
@@ -920,6 +932,18 @@ Lilygo TLora Pager
 GAT562_MESH_TRIAL_TRACKER: HardwareModel.ValueType  # 104
 """*
 GAT562 Mesh Trial Tracker
+"""
+WISMESH_TAG: HardwareModel.ValueType  # 105
+"""*
+RAKwireless WisMesh Tag
+"""
+RAK3312: HardwareModel.ValueType  # 106
+"""*
+RAKwireless WisBlock Core RAK3312 https://docs.rakwireless.com/product-categories/wisduo/rak3112-module/overview/
+"""
+THINKNODE_M5: HardwareModel.ValueType  # 107
+"""*
+Elecrow ThinkNode M5 https://www.elecrow.com/wiki/ThinkNode_M5_Meshtastic_LoRa_Signal_Transceiver_ESP32-S3.html
 """
 PRIVATE_HW: HardwareModel.ValueType  # 255
 """

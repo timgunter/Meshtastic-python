@@ -1418,6 +1418,14 @@ class MeshInterface:  # pylint: disable=R0902
                 self.localNode.moduleConfig.paxcounter.CopyFrom(
                     fromRadio.moduleConfig.paxcounter
                 )
+            elif fromRadio.moduleConfig.HasField("direct_message_reply"):
+                self.localNode.moduleConfig.direct_message_reply.CopyFrom(
+                    fromRadio.moduleConfig.direct_message_reply
+                )
+            elif fromRadio.moduleConfig.HasField("position_update_reply"):
+                self.localNode.moduleConfig.position_update_reply.CopyFrom(
+                    fromRadio.moduleConfig.position_update_reply
+                )
 
         else:
             logging.debug("Unexpected FromRadio payload")
